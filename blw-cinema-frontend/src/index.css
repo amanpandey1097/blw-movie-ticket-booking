@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-bebas: 'Bebas Neue', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+  --font-dm: 'DM Sans', sans-serif;
+
+  --color-cinema-bg: #080a0e;
+  --color-cinema-surface: #0f1117;
+  --color-cinema-gold: #c9920a;
+  --color-cinema-gold-light: #f0c040;
+  --color-cinema-text: #6b5c42;
+  --color-cinema-light: #e8dcc8;
+  --color-cinema-muted: #8a7355;
+  --color-cinema-accent: #c0392b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #080a0e;
+  color: #e8dcc8;
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.font-bebas {
+  font-family: 'Bebas Neue', sans-serif !important;
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', serif !important;
+}
+
+.font-dm {
+  font-family: 'DM Sans', sans-serif !important;
+}

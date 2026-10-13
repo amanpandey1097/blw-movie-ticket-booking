@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: blw-cinema-api
+    runtime: node
+    rootDir: Backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: FRONTEND_URLS
+        sync: false
+      - key: MONGO_URI
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: AUTH_TEST_MODE
+        value: "true"
+      - key: ADMIN_INVITE_CODE
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: SHOW_TIMEZONE_OFFSET
+        value: "+05:30"
+      - key: SEAT_LOCK_TTL_SECONDS
+        value: "600"
