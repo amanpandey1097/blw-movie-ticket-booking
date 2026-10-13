@@ -3,7 +3,7 @@ services:
     name: blw-cinema-api
     runtime: node
     rootDir: Backend
-    buildCommand: npm ci
+    buildCommand: npm ci --legacy-peer-deps
     startCommand: npm start
     healthCheckPath: /health
     envVars:
