@@ -1,0 +1,59 @@
+name: Bootstrap project
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    if: ${{ !contains(github.event.head_commit.message, '[skip bootstrap]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild fixed project
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .bootstrap/part* > /tmp/source.patch.gz
+          gzip -dc /tmp/source.patch.gz > /tmp/source.patch
+
+          rm -rf /tmp/original
+          mkdir -p /tmp/original
+          curl -L --fail --retry 3 \
+            https://github.com/Sahilgggg/BLW-Cinema-web/archive/refs/heads/main.tar.gz \
+            -o /tmp/original.tar.gz
+          tar -xzf /tmp/original.tar.gz -C /tmp/original
+
+          find . -mindepth 1 -maxdepth 1 \
+            ! -name .git \
+            ! -name .github \
+            ! -name .bootstrap \
+            -exec rm -rf {} +
+
+          cp -a /tmp/original/BLW-Cinema-web-main/. .
+          patch -p5 < /tmp/source.patch
+
+          (cd Backend && npm install --package-lock-only --ignore-scripts --legacy-peer-deps)
+          (cd blw-cinema-frontend && npm install --package-lock-only --ignore-scripts --legacy-peer-deps)
+
+          rm -rf .bootstrap
+
+      - name: Commit complete project
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Upload complete BLW Movie Ticket Booking project [skip bootstrap]"
+          git push
